@@ -2,9 +2,10 @@
 
 
 class KasparSequence:
-    """ This class allows for manipulation of an
-        individual genomic region for kaspar
-        primer designing.
+    """
+    This class allows for manipulation of an
+    individual genomic region for kaspar
+    primer designing.
     """
 
     def __init__(self, kaspar_sequence):
@@ -14,7 +15,7 @@ class KasparSequence:
         The region length will not change, though contents
         may to reflect polymorphisms, or masking.
         
-        :param in_region: String of nucleotide characters.
+        :param kaspar_sequence: String of nucleotide characters.
         """
         self.sequence = kaspar_sequence
 
