@@ -5,7 +5,7 @@ import subprocess
 
 def run(cmnd):
     """ Run command and report status. """
-    print (time.ctime() + ' ---- Running : %s' % cmnd)
+    log(' ---- Running : %s' % cmnd)
     if subprocess.call(cmnd) != 0:
         raise RuntimeError('Failed : %s ' % cmnd)
 
