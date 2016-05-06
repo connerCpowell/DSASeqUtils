@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 from utils.SeqReader import SeqReader
-from utils.utilities import get_flag
-from utils.utilities import help_desired
 
 
 def get_seq(file_name, query_header):
@@ -47,6 +45,9 @@ python get_fasta_sequence.py [options] -f <fasta> -s <header>
 """
 
     import sys
+
+    from utils.utilities import get_flag
+    from utils.utilities import help_desired
 
     # Parse the command line arguments.
     if help_desired(sys.argv):

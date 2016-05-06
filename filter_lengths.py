@@ -55,7 +55,7 @@ elif '-q' in sys.argv and '-a' not in sys.argv:
     using_fastas = False
 elif '-q' in sys.argv and '-a' in sys.argv:
     raise ValueError(
-        "'-a' and '-q' flag cannot be specified together. Files must be either all fasta or all fastq format."
+        "'-a' and '-q' flag cannot be specified together. File must be either fasta or fastq format."
     )
 else:
     raise ValueError(
