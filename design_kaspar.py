@@ -103,10 +103,6 @@ Output:
     from utils.utilities import help_desired
 
     # get command line args
-    if len(sys.argv) < 7:
-        print(usage)
-        sys.exit()
-
     if help_desired(sys.argv):
         sys.exit(usage)
 
