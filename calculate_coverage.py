@@ -18,7 +18,7 @@ python calculate_coverage [options] -s <genome size>
 
     flags:
 
-    -s       ------------------- Genome size
+    -s       ------------------- Genome size in bp. e.g. 1 Mb genome = 1000000
 
 
     OPTIONS:
