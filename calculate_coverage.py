@@ -23,7 +23,8 @@ python calculate_coverage [options] -s <genome size>
 
     OPTIONS:
 
-    -help, --help   ------------ Display help message.
+    -h, --help      ------------ Display help message.
+    --hist          ------------ Write a read length histogram file to current working directory.
     -a              ------------ Input files are in fasta format.
     -q              ------------ Input files are in fastq format.
 
@@ -36,6 +37,7 @@ from utils.stats import calculate_mean
 from utils.stats import calculate_pop_sd
 from utils.utilities import get_flag
 from utils.utilities import help_desired
+from utils.utilities import log
 
 # Get command line args
 if help_desired(sys.argv):
@@ -59,6 +61,14 @@ else:
     raise ValueError(
         "A '-a' or '-q' flag must be specified. This specifies fasta or fastq file format."
     )
+
+# Check if a histogram file is desired.
+if '--hist' in sys.argv:
+    histogram_requested = True
+    log("Histogram file requested.")
+else:
+    histogram_requested = False
+    log("Histogram file not requested.")
 
 # Get the list of all fasta or fastq files.
 if using_fastas:
@@ -96,9 +106,16 @@ for f in all_files:
         for read in x.parse_fastq():
             all_seq_lengths.append(len(read[1]))
 
-print "The coverage for a genome of size %r is %f." % (genome_size, sum(all_seq_lengths)/genome_size)
-print "The average read length is %f." % calculate_mean(all_seq_lengths)
-print "The read length standard deviation is %f." % calculate_pop_sd(all_seq_lengths)
+# Write read length histogram file.
+if histogram_requested:
+    log("Writing read length histogram 'read_lengths.txt'.")
+    with open('read_lengths.txt', 'w') as histogram_file:
+        for length in sorted(all_seq_lengths):
+            histogram_file.write(str(length) + "\n")
+
+log("The coverage for a genome of size %r is %f." % (genome_size, sum(all_seq_lengths)/genome_size))
+log("The average read length is %f." % calculate_mean(all_seq_lengths))
+log("The read length standard deviation is %f." % calculate_pop_sd(all_seq_lengths))
 
 
 
