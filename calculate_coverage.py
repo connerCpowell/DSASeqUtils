@@ -1,5 +1,14 @@
 from __future__ import division
 
+import sys
+
+from utils.SeqReader import SeqReader
+from utils.stats import calculate_mean
+from utils.stats import calculate_pop_sd
+from utils.utilities import get_flag
+from utils.utilities import help_desired
+from utils.utilities import log
+
 usage = """
 Michael Alonge
 calculate_coverage.py
@@ -29,15 +38,6 @@ python calculate_coverage [options] -s <genome size> <fastq/fasta file(s)>
     -q              ------------ Input files are in fastq format.
 
 """
-
-import sys
-
-from utils.SeqReader import SeqReader
-from utils.stats import calculate_mean
-from utils.stats import calculate_pop_sd
-from utils.utilities import get_flag
-from utils.utilities import help_desired
-from utils.utilities import log
 
 # Get command line args
 if help_desired(sys.argv):
