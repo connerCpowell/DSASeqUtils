@@ -18,7 +18,7 @@ python filter_lengths.py [options] -f <sequence file> -c <length cutoff>
 
     flags:
 
-    -f      ------------------- Fasta file from which a sequence is desired.
+    -f      ------------------- Sequence file from which a sequence is desired.
     -c      ------------------- The header of the sequence desired.
 
 
