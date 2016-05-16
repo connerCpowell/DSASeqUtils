@@ -2,7 +2,7 @@
 
 usage = """
 Michael Alonge
-get_fasta_sequence.py
+filter_lengths.py
 5.3.16
 Driscolls
 ___________
