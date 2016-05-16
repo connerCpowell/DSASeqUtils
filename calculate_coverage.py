@@ -113,9 +113,9 @@ if histogram_requested:
         for length in sorted(all_seq_lengths):
             histogram_file.write(str(length) + "\n")
 
-log("The coverage for a genome of size %r is %f." % (genome_size, sum(all_seq_lengths)/genome_size))
-log("The average read length is %f." % calculate_mean(all_seq_lengths))
-log("The read length standard deviation is %f." % calculate_pop_sd(all_seq_lengths))
+log("The coverage for a genome of size %r is %fX." % (genome_size, sum(all_seq_lengths)/genome_size))
+log("The average read length is %fbp." % calculate_mean(all_seq_lengths))
+log("The read length standard deviation is %fbp." % calculate_pop_sd(all_seq_lengths))
 
 
 
