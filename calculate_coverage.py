@@ -2,19 +2,19 @@ from __future__ import division
 
 usage = """
 Michael Alonge
-search_subseq.py
+calculate_coverage.py
 5.3.16
 Driscolls
 ___________
 Description:
 
-This command line utility takes a sequences file, and output sequences
-of that file that contain a specified subsequence.
+This command line utility calculates genome coverage given a set of fasta
+or fastq files.
 
 _____
 Usage:
 
-python calculate_coverage [options] -s <genome size>
+python calculate_coverage [options] -s <genome size> <fastq/fasta file(s)>
 
     flags:
 
