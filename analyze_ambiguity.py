@@ -2,24 +2,23 @@
 
 usage = """
 Michael Alonge
-filter_lengths.py
-5.3.16
+analyze_ambiguity.py
+6.2.16
 Driscolls
 ___________
 Description:
 
-This command line utility takes a sequences file, and output sequences
-of that file that are longer than a specified length.
+This command line utility takes a sequences file, and reports various metrics
+regarding the ambiguity codes therein.
 
 _____
 Usage:
 
-python filter_lengths.py [options] -f <sequence file> -c <length cutoff>
+python analyze_ambiguity.py [options] -f <sequence file>
 
     flags:
 
-    -f      ------------------- Sequence file from which a sequence is desired.
-    -c      ------------------- The header of the sequence desired.
+    -f      ------------------- Sequence file for which ambiguity code analysis is desired.
 
 
     OPTIONS:
@@ -41,13 +40,6 @@ if help_desired(sys.argv):
 # Get the sequence file.
 input_file = get_flag(sys.argv, '-f', usage)
 
-# Get the cutoff length.
-cutoff = get_flag(sys.argv, '-c', usage)
-try:
-    cutoff = int(cutoff)
-except ValueError():
-    raise ValueError('Length cutoff must be an integer.')
-
 # Check if the input file is in fasta or fastq format.
 if '-a' in sys.argv and '- q' not in sys.argv:
     using_fastas = True
@@ -62,17 +54,40 @@ else:
         "A '-a' or '-q' flag must be specified. This specifies fasta or fastq file format."
     )
 
-# Iterate through the sequence file and write sequence to standard output
-# if the sequence is longer than the specified cutoff length.
+ambiguity_codes = {
+    "Y",
+    "R",
+    "W",
+    "S",
+    "K",
+    "M",
+    "D",
+    "V",
+    "H",
+    "B",
+}
+
+# Iterate through each sequence and get ambiguity code info.
+# For now, I will just get a per3centage of nucleotides that are
+# ambiguous, and their genomic coordinates.
+
+# In the future, maybe report number per sequence, and frequency of each code.
+total = 0
+total_ambiguity = 0
 x = SeqReader(input_file)
 if using_fastas:
     for header, sequence in x.parse_fasta():
-        if len(sequence) > cutoff:
-            print header
-            print sequence
+        total += len(sequence)
+        # The following should be optimized. Maybe use a mapping or regex?
+        for code in ambiguity_codes:
+            total_ambiguity += sum(map(sequence.count, ambiguity_codes))
+
 else:
     for read in x.parse_fastq():
-        if len(read[1]) > cutoff:
-            for i in read:
-                print i
+        total += len(read[1])
+        for code in ambiguity_codes:
+            total_ambiguity += sum(map(read[1].count, ambiguity_codes))
+
+print 'The total number of nucleotides is %r' %total
+print 'The total number of ambiguous nucleotides is %r' %total_ambiguity
 
