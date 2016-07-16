@@ -41,9 +41,10 @@ def help_desired(args_list):
             '-h' in args_list,
             '-H' in args_list,
             '-help' in args_list,
-            '-HELP' in args_list
+            '-HELP' in args_list,
+            '--help' in args_list,
+            '--HELP' in args_list
         ]
     ):
         return True
-    else:
-        return False
+    return False
