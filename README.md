@@ -77,7 +77,7 @@ ___________
 Description:
 This command line utility calculates genome coverage given a set of fasta
 or fastq files. This is not a utility that makes use of mapping information to
-report precise mapping information. Rather, this tool reports a theoretical
+report precise coverage information. Rather, this tool reports a theoretical
 global genome coverage given an expected genome size.
 _____
 Usage:
@@ -119,7 +119,7 @@ python design_kaspar.py [options] -g <genome build> -db <blast db> -c <LG or sca
     -l       ------------------- Genomic coordinate of SNP.
     -s       ------------------- comma separated list of SNP reference
                                  and alternate nt. i.e. A,G
-    -f       ------------------- Integer of number of flanking
+    -f       ------------------- Integer of the number of flanking
                                  nucleotides to select surrounding SNP
     -p       ------------------- Project name. Prefix for output files.
     OPTIONS:
@@ -142,7 +142,7 @@ Output:
 ___________
 Description:
 
-This command line utility takes a sequences file, and output sequences
+This command line utility takes a sequence file, and output sequences
 of a length that falls between upper and lower limits.
 
 _____
@@ -188,8 +188,8 @@ python get_fasta_sequence.py [options] -f <fasta> -s <header>
 ___________
 Description:
 
-This command line utility takes a sequences file, and output sequences
-of that file that contain a specified subsequence.
+This command line utility takes a sequence file and outputs sequences
+of that file containing a specified subsequence.
 
 _____
 Usage:
