@@ -8,8 +8,8 @@ Driscolls
 ___________
 Description:
 
-This command line utility takes a sequences file, and output sequences
-of that file that contain a specified subsequence.
+This command line utility takes a sequence file and outputs sequences
+of that file containing a specified subsequence.
 
 _____
 Usage:
@@ -18,7 +18,7 @@ python search_subseq.py [options] -f <sequence file> -s <length cutoff>
 
     flags:
 
-    -f      ------------------- Fasta file from which a sequence is desired.
+    -f      ------------------- File from which a sequence is desired.
     -s      ------------------- The subsequence to search for.
 
 

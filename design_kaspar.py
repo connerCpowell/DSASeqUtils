@@ -75,7 +75,7 @@ python design_kaspar.py [options] -g <genome build> -db <blast db> -c <LG or sca
     -s       ------------------- comma separated list of SNP reference
                                  and alternate nt. i.e. A,G
 
-    -f       ------------------- Integer of number of flanking
+    -f       ------------------- Integer of the number of flanking
                                  nucleotides to select surrounding SNP
     -p       ------------------- Project name. Prefix for output files.
 

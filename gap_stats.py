@@ -42,17 +42,20 @@ class GapSequence:
 
 if __name__ == "__main__":
     usage = """
-    Command line utility for analyzing gaps in a fasta file. One file can be analyzed, or up to 3 can be compared.
-    Use this tool to compare a genome assembly pre and post gap filling with tools such as PBJelly.
-    Usage:
-      python gap_stats.py [options] <sequence1.fasta> <sequence2.fasta> <sequence3.fasta>
-    Options
-      -m        Save a matplotlib gap length histogram in current working directory.
-                ** Requires matplotlib to be installed **
-      -p        Write a plain text file of all gap lengths in current working directory for
-                use as input into other statistical analysis software.
-      -b        Make a gap bed file for each input fasta.
-      -h        Print help message.
+___________
+Description:
+Command line utility for analyzing gaps in a fasta file. One file can be analyzed, or up to 3 can be compared.
+Use this tool to compare a genome assembly pre and post gap filling with tools such as PBJelly.
+_____
+Usage:
+python gap_stats.py [options] <sequence1.fasta> <sequence2.fasta> <sequence3.fasta>
+    OPTIONS:
+    -m        Save a matplotlib gap length histogram in current working directory.
+              * Requires matplotlib to be installed *
+    -p        Write a plain text file of all gap lengths in current working directory for
+              use as input into other statistical analysis software.
+    -b        Make a gap bed file for each input fasta.
+    -h        Print help message.
     """
 
     def parse_args(args_list):

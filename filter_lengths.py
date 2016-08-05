@@ -8,8 +8,8 @@ Driscolls
 ___________
 Description:
 
-This command line utility takes a sequences file, and output sequences
-of that file that are longer than a specified length.
+This command line utility takes a sequence file and output sequences
+of a length that falls between upper and lower limits.
 
 _____
 Usage:
@@ -19,7 +19,8 @@ python filter_lengths.py [options] -f <sequence file> -c <length cutoff>
     flags:
 
     -f      ------------------- Sequence file from which a sequence is desired.
-    -c      ------------------- The header of the sequence desired.
+    -l      ------------------- Lower cutoff value for read length.
+    -u      ------------------- Upper cutoff value for read length.
 
 
     OPTIONS:
@@ -42,11 +43,17 @@ if help_desired(sys.argv):
 input_file = get_flag(sys.argv, '-f', usage)
 
 # Get the cutoff length.
-cutoff = get_flag(sys.argv, '-c', usage)
+lower_cutoff = get_flag(sys.argv, '-l', usage)
 try:
-    cutoff = int(cutoff)
+    cutoff = int(lower_cutoff)
 except ValueError():
-    raise ValueError('Length cutoff must be an integer.')
+    raise ValueError('Lower length cutoff must be an integer.')
+
+upper_cutoff = get_flag(sys.argv, '-u', usage)
+try:
+    cutoff = int(upper_cutoff)
+except ValueError():
+    raise ValueError('Upper length cutoff must be an integer.')
 
 # Check if the input file is in fasta or fastq format.
 if '-a' in sys.argv and '- q' not in sys.argv:
@@ -67,12 +74,12 @@ else:
 x = SeqReader(input_file)
 if using_fastas:
     for header, sequence in x.parse_fasta():
-        if len(sequence) > cutoff:
+        if upper_cutoff > len(sequence) > lower_cutoff:
             print header
             print sequence
 else:
     for read in x.parse_fastq():
-        if len(read[1]) > cutoff:
+        if upper_cutoff > len(read[1]) > lower_cutoff:
             for i in read:
                 print i
 

@@ -19,7 +19,9 @@ ___________
 Description:
 
 This command line utility calculates genome coverage given a set of fasta
-or fastq files.
+or fastq files. This is not a utility that makes use of mapping information to
+report precise coverage information. Rather, this tool reports a theoretical
+global genome coverage given an expected genome size.
 
 _____
 Usage:
