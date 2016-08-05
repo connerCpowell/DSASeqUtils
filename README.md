@@ -26,7 +26,7 @@ All command line utilities can will show help message if run with no arguments, 
 ## Genomic Gap Analysis
 
 ### gap_stats.py
-
+```
 Command line utility for analyzing gaps in a fasta file. One file can be analyzed, or up to 3 can be compared.
     Use this tool to compare a genome assembly pre and post gap filling with tools such as PBJelly.
     Usage:
@@ -38,3 +38,4 @@ Command line utility for analyzing gaps in a fasta file. One file can be analyze
                 use as input into other statistical analysis software.
       -b        Make a gap bed file for each input fasta.
       -h        Print help message.
+```
