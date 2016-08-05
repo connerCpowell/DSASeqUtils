@@ -37,9 +37,9 @@ class AmbiguousSequence:
     Creates objects representing sequences with gaps in them.
     Utilities defined here characterize these gaps.
     count_Ns -------- Calculates total number of 'N' characters present in the sequence.
-    get_gaps -------- Uses regular expressions to return each contiguous subsequence of 'N' characters.
+    get_gaps -------- Uses regular expressions to return each contiguous sub sequence of 'N' characters.
     get_gap_coords -- Uses regular expressions to return the string indices of each
-                      contiguous subsequence of 'N' characters.
+                      contiguous sub sequence of 'N' characters.
     """
 
     ambiguity_codes = {
@@ -148,5 +148,5 @@ if __name__ == '__main__':
     # If a bed file is requested, write to current workding directory.
     if bed_file_requested:
         write_bed_file(all_ambiguous_coords, 'ambiguous_nucleotides.bed')
-    log(' ---- The total number of nucleotides is %r' %total)
-    log(' ---- The total number of ambiguous nucleotides is %r' %total_ambiguity)
+    log(' ---- The total number of nucleotides is %r' % total)
+    log(' ---- The total number of ambiguous nucleotides is %r' % total_ambiguity)
