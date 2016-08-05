@@ -11,7 +11,7 @@
 ## Dependencies
 All utilities require python2.7.
 
-design_kaspar.py requires that blastn. Please ensure blastn is in your path before executing design_kaspar.py 
+design_kaspar.py requires blastn. Please ensure blastn is in your path before executing design_kaspar.py 
 
 gap_stats.py has an optional flag that requires matplotlib.
 
