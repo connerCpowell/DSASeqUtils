@@ -9,7 +9,11 @@
   <li>Mac OSX</li>
 </ul>
 ## Dependencies
-DSASeqUtils has no dependencies except for python2.7. There is an optional usage of the gap_stats.py utility that requires matplotlib.
+All utilities require python2.7.
+
+design_kaspar.py requires that blastn. Please ensure blastn is in your path before executing design_kaspar.py 
+
+gap_stats.py has an optional flag that requires matplotlib.
 
 ## Installing From Source
 Currently, the only way to install DSASeqUtils is from source. To install, execute the following commands:
@@ -21,23 +25,26 @@ $python setup.py install
 ```
 
 # Usage
-All command line utilities can will show help message if run with no arguments, or if the -h flag is specified. 
+All command line utilities will show help message if run with no arguments, or if the -h flag is specified. 
 
 ## Genomic Gap Analysis
 
 ### gap_stats.py
 ```
+___________
+Description:
 Command line utility for analyzing gaps in a fasta file. One file can be analyzed, or up to 3 can be compared.
-    Use this tool to compare a genome assembly pre and post gap filling with tools such as PBJelly.
-    Usage:
-      python gap_stats.py [options] <sequence1.fasta> <sequence2.fasta> <sequence3.fasta>
-    Options
-      -m        Save a matplotlib gap length histogram in current working directory.
-                * Requires matplotlib to be installed *
-      -p        Write a plain text file of all gap lengths in current working directory for
-                use as input into other statistical analysis software.
-      -b        Make a gap bed file for each input fasta.
-      -h        Print help message.
+Use this tool to compare a genome assembly pre and post gap filling with tools such as PBJelly.
+_____
+Usage:
+python gap_stats.py [options] <sequence1.fasta> <sequence2.fasta> <sequence3.fasta>
+    OPTIONS:
+    -m        Save a matplotlib gap length histogram in current working directory.
+              * Requires matplotlib to be installed *
+    -p        Write a plain text file of all gap lengths in current working directory for
+              use as input into other statistical analysis software.
+    -b        Make a gap bed file for each input fasta.
+    -h        Print help message.
 ```
 
 ## Genomic Ambiguity Analysis
@@ -57,9 +64,8 @@ python analyze_ambiguity.py [options] -f <sequence file>
     -h, --help   -------------- Display help message.
     -a           -------------- Input file is in fasta format.
     -q           -------------- Input file is in fastq format.
-    -b           ------------- Write the genomic coordinates of all ambiguous
+    -b           -------------- Write the genomic coordinates of all ambiguous
                                 nucleotides to amb_coords.bed
-
 ```
 
 ## Genomic Coverage Analysis
@@ -70,7 +76,9 @@ python analyze_ambiguity.py [options] -f <sequence file>
 ___________
 Description:
 This command line utility calculates genome coverage given a set of fasta
-or fastq files.
+or fastq files. This is not a utility that makes use of mapping information to
+report precise mapping information. Rather, this tool reports a theoretical
+global genome coverage given an expected genome size.
 _____
 Usage:
 python calculate_coverage [options] -s <genome size> <fastq/fasta file(s)>
