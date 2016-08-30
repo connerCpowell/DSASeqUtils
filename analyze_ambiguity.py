@@ -1,7 +1,17 @@
 #!/usr/bin/env python
-import re
 
-usage = """
+if __name__ == '__main__':
+    import sys
+    import os
+    import ntpath
+
+    from Sequence.Sequence import AmbiguousSequence
+    from utils.SeqReader import SeqReader
+    from utils.utilities import get_flag
+    from utils.utilities import help_desired
+    from utils.utilities import log
+
+    usage = """
 Michael Alonge
 analyze_ambiguity.py
 6.2.16
@@ -29,54 +39,7 @@ python analyze_ambiguity.py [options] -f <sequence file>
     -q           -------------- Input file is in fastq format.
     -b           ------------- Write the genomic coordinates of all ambiguous
                                 nucleotides to amb_coords.bed
-"""
-
-
-class AmbiguousSequence:
     """
-    Creates objects representing sequences with gaps in them.
-    Utilities defined here characterize these gaps.
-    count_Ns -------- Calculates total number of 'N' characters present in the sequence.
-    get_gaps -------- Uses regular expressions to return each contiguous sub sequence of 'N' characters.
-    get_gap_coords -- Uses regular expressions to return the string indices of each
-                      contiguous sub sequence of 'N' characters.
-    """
-
-    ambiguity_codes = {
-        "Y",
-        "R",
-        "W",
-        "S",
-        "K",
-        "M",
-        "D",
-        "V",
-        "H",
-        "B",
-    }
-
-    ambiguity_regex = r'[YRWSKMDVHB]'
-
-    def __init__(self, sequence):
-        self.sequence = sequence.upper()
-
-    def count_ambiguity_codes(self):
-        """ Return the total number of Ns in this sequence. """
-        return sum(map(self.sequence.count, self.ambiguity_codes))
-
-    def get_ambiguity_code_coords(self):
-        """ Find all of the gap string indices for this sequence. """
-        return re.finditer(self.ambiguity_regex, self.sequence)
-
-if __name__ == '__main__':
-    import sys
-    import os
-    import ntpath
-
-    from utils.SeqReader import SeqReader
-    from utils.utilities import get_flag
-    from utils.utilities import help_desired
-    from utils.utilities import log
 
     def write_bed_file(bed_dict, out_file_name):
         """

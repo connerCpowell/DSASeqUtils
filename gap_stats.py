@@ -4,40 +4,14 @@ from __future__ import division
 import os
 import sys
 import ntpath
-import re
 import collections
 
+from Sequence.Sequence import GapSequence
 from utils.SeqReader import SeqReader
 from utils.stats import calculate_mean
 from utils.stats import calculate_pop_sd
 from utils.utilities import log
 from utils.utilities import help_desired
-
-
-class GapSequence:
-    """
-    Creates objects representing sequences with gaps in them.
-    Utilities defined here characterize these gaps.
-    count_Ns -------- Calculates total number of 'N' characters present in the sequence.
-    get_gaps -------- Uses regular expressions to return each contiguous subsequence of 'N' characters.
-    get_gap_coords -- Uses regular expressions to return the string indices of each
-                      contiguous subsequence of 'N' characters.
-    """
-
-    def __init__(self, sequence):
-        self.sequence = sequence.upper()
-
-    def count_Ns(self):
-        """ Return the total number of Ns in this sequence. """
-        return self.sequence.count('N')
-
-    def get_gaps(self):
-        """ Find all of the gaps for this sequence."""
-        return re.findall(r'N+', self.sequence)
-
-    def get_gap_coords(self):
-        """ Find all of the gap string indices for this sequence. """
-        return re.finditer(r'N+', self.sequence)
 
 
 if __name__ == "__main__":
@@ -225,6 +199,7 @@ python gap_stats.py [options] <sequence1.fasta> <sequence2.fasta> <sequence3.fas
                 all_gap_lengths.append(len(gap))
 
             # Now fill in bed file data structure.
+            # Check that the coorinates are correct here? Do I need to add one?q
             all_coordinates = [(m.start(0)+1, m.end(0)) for m in gap_sequence.get_gap_coords()]
             if all_coordinates:
                 bed_gaps[header] = all_coordinates

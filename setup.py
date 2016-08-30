@@ -11,7 +11,7 @@ setup(
     description='A collection of command line utilities for simple processing of DNA sequence data.',
     author='Michael Alonge',
     author_email='michael.alonge@driscolls.com',
-    packages=['utils'],
-    package_dir={'utils': 'utils/'},
+    packages=['utils', 'Sequence'],
+    package_dir={'utils': 'utils/', 'Sequence': 'Sequence/'},
     scripts=scripts,
 )

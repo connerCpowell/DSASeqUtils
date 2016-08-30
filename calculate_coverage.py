@@ -100,6 +100,7 @@ else:
 
 all_seq_lengths = []
 for f in all_files:
+    log("Processing %s" % f)
     x = SeqReader(f)
     if using_fastas:
         for header, seq in x.parse_fasta():

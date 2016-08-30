@@ -1,45 +1,6 @@
 #!/usr/bin/env python
 
 
-class KasparSequence:
-    """
-    This class allows for manipulation of an
-    individual genomic region for kaspar
-    primer designing.
-    """
-
-    def __init__(self, kaspar_sequence):
-        """
-        Create instance variable for genomic kaspar region represented as a 
-        string of nucleotide characters.
-        The region length will not change, though contents
-        may to reflect polymorphisms, or masking.
-        
-        :param kaspar_sequence: String of nucleotide characters.
-        """
-        self.sequence = kaspar_sequence
-
-    def replace_coordinates(self, replacement, coord1, coord2):
-        """
-        Replace region given in coords with replacement character.
-        Coords are genomic coordinates, therefore the first
-        character has coordinate 1, not 0.
-
-        :param replacement: the character to insert into specified regions
-        :param coord1: Start genomic coordinate.
-        :param coord2: End genomic coordinate.
-        """
-        # Parse region into parts that will not be changed.
-        pre = self.region[:coord1]
-        post = self.region[coord2:]
-        insert = ''
-        # Insert replacement character(s) for each character in
-        # Region to be replaced.
-        for i in range(len(self.region) - (len(pre) + len(post))):
-            insert += str(replacement)
-        self.sequence = pre + insert + post
-
-
 if __name__ == "__main__":
     usage = """
 design_kaspar.py
@@ -96,6 +57,7 @@ Output:
 
     import sys
 
+    from Sequence.Sequence import KasparSequence
     from get_fasta_sequence import get_seq
     from utils.utilities import log
     from utils.utilities import run
@@ -140,7 +102,7 @@ Output:
 
     # Get scaffold with SNP.
     log('---- Getting SNP plus flanking region.')
-    sequence = get_seq(assembly, scaffold)
+    header, sequence = get_seq(assembly, scaffold)
     if sequence is None:
         raise ValueError(
             'The header %s provided was not found in the reference genome file.' % scaffold
