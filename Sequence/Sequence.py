@@ -6,7 +6,7 @@ class BaseSequence(object):
 
     def __init__(self, in_sequence):
         if not isinstance(in_sequence, str):
-            raise AttributeError('Only a string can be used to instantiate this class object.')
+            raise AttributeError('Only a string can be used to instantiate this class.')
         self.sequence = in_sequence.upper()
 
 
