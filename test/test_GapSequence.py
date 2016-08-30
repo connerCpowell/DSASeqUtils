@@ -1,10 +1,10 @@
 __author__ = 'malonge'
 import unittest
 
-from gap_stats import GapSequence
+from Sequence.Sequence import GapSequence
 
 
-class GapStatsTest(unittest.TestCase):
+class GapSequenceTest(unittest.TestCase):
 
     def setUp(self):
         self.gs_empty_string = GapSequence('')
@@ -59,8 +59,9 @@ class GapStatsTest(unittest.TestCase):
     # Test the get_gap_coords method
     def test_get_gap_coords(self):
         x = GapSequence('AANNAA')
-        self.assertEqual(x.get_gap_coords(), )
+        gap_iter = x.get_gap_coords()
 """
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,10 +1,10 @@
 __author__ = 'malonge'
 import unittest
 
-from design_kaspar import KasparSequence
+from Sequence.Sequence import KasparSequence
 
 
-class GapStatsTest(unittest.TestCase):
+class KasparSequenceTest(unittest.TestCase):
 
     def setUp(self):
         self.ks_empty_string = KasparSequence('')

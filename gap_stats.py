@@ -200,7 +200,7 @@ python gap_stats.py [options] <sequence1.fasta> <sequence2.fasta> <sequence3.fas
 
             # Now fill in bed file data structure.
             # Check that the coorinates are correct here? Do I need to add one?q
-            all_coordinates = [(m.start(0)+1, m.end(0)) for m in gap_sequence.get_gap_coords()]
+            all_coordinates = [(m.start(0), m.end(0)) for m in gap_sequence.get_gap_coords()]
             if all_coordinates:
                 bed_gaps[header] = all_coordinates
 
