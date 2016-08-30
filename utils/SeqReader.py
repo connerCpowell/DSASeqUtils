@@ -19,23 +19,29 @@ for read in y.parse_fastq():
 
 
 class SeqReader:
-    """ Defines two generator methods, one for fasta files,
-        and one for fastq files. These methods are bare bones,
-        and simply provide the raw contents of the file provided.
-        parse_fasta() --- fasta parser. Yields header, sequence for each sequence.
-        parse_fastq() --- fastq parser. Yields a list of 4 elements per read
-                          [header, sequence, '+', quality scores]
+    """
+    Defines two generator methods, one for fasta files,
+    and one for fastq files. These methods are bare bones,
+    and simply provide the raw contents of the file provided.
+    parse_fasta() --- fasta parser. Yields header, sequence for each sequence.
+    parse_fastq() --- fastq parser. Yields a list of 4 elements per read
+                      [header, sequence, '+', quality scores]
     """
 
     def __init__(self, in_file):
-        """ Initialize sequence file to be parsed."""
+        """
+        Initialize sequence file to be parsed.
+
+        :param in_file:
+        """
         if not isinstance(in_file, str):
             raise AttributeError('Only a string can be used to instantiate a SeqReader object.')
         self.in_file = in_file
 
     def parse_fasta(self):
-        """ Generator yielding header and sequence, for each sequence
-            in the fasta file sent to the class.
+        """
+        Generator yielding header and sequence, for each sequence
+        in the fasta file sent to the class.
         """
         with open(self.in_file) as fasta_file:
             sequence = ''
@@ -64,8 +70,9 @@ class SeqReader:
         yield header, sequence
 
     def parse_fastq(self):
-        """ Fastq generator, yielding a list of 4 lines at a time.
-            These 4 lines represent 1 read.
+        """
+        Fastq generator, yielding a list of 4 lines at a time.
+        These 4 lines represent 1 read.
         """
         with open(self.in_file) as fastq_file:
             read_list = []
