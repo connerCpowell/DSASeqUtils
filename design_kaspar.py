@@ -57,12 +57,12 @@ Output:
 
     import sys
 
-    from Sequence.Sequence import KasparSequence
+    from dsa_seq_utils.Sequence import KasparSequence
     from get_fasta_sequence import get_seq
-    from utils.utilities import log
-    from utils.utilities import run
-    from utils.utilities import get_flag
-    from utils.utilities import help_desired
+    from dsa_seq_utils.utilities import log
+    from dsa_seq_utils.utilities import run
+    from dsa_seq_utils.utilities import get_flag
+    from dsa_seq_utils.utilities import help_desired
 
     # get command line args
     if help_desired(sys.argv):

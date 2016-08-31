@@ -2,7 +2,7 @@ __author__ = 'malonge'
 
 import unittest
 
-from Sequence.Sequence import AmbiguousSequence
+from dsa_seq_utils.Sequence import AmbiguousSequence
 
 
 class AmbiguousSequenceTest(unittest.TestCase):

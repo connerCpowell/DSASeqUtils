@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from utils.SeqReader import SeqReader
+from dsa_seq_utils.SeqReader import SeqReader
 
 
 def get_seq(file_name, query_header):

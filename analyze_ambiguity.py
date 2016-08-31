@@ -5,11 +5,11 @@ if __name__ == '__main__':
     import os
     import ntpath
 
-    from Sequence.Sequence import AmbiguousSequence
-    from utils.SeqReader import SeqReader
-    from utils.utilities import get_flag
-    from utils.utilities import help_desired
-    from utils.utilities import log
+    from dsa_seq_utils.Sequence import AmbiguousSequence
+    from dsa_seq_utils.SeqReader import SeqReader
+    from dsa_seq_utils.utilities import get_flag
+    from dsa_seq_utils.utilities import help_desired
+    from dsa_seq_utils.utilities import log
 
     usage = """
 Michael Alonge

@@ -6,12 +6,12 @@ import sys
 import ntpath
 import collections
 
-from Sequence.Sequence import GapSequence
-from utils.SeqReader import SeqReader
-from utils.stats import calculate_mean
-from utils.stats import calculate_pop_sd
-from utils.utilities import log
-from utils.utilities import help_desired
+from dsa_seq_utils.Sequence import GapSequence
+from dsa_seq_utils.SeqReader import SeqReader
+from dsa_seq_utils.stats import calculate_mean
+from dsa_seq_utils.stats import calculate_pop_sd
+from dsa_seq_utils.utilities import log
+from dsa_seq_utils.utilities import help_desired
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 __author__ = 'malonge'
 import unittest
 
-from Sequence.Sequence import KasparSequence
+from dsa_seq_utils.Sequence import KasparSequence
 
 
 class KasparSequenceTest(unittest.TestCase):

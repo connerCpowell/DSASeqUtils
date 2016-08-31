@@ -1,7 +1,7 @@
 __author__ = 'malonge'
 import unittest
 
-from Sequence.Sequence import GapSequence
+from dsa_seq_utils.Sequence import GapSequence
 
 
 class GapSequenceTest(unittest.TestCase):

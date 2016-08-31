@@ -2,7 +2,7 @@ __author__ = 'malonge'
 import os
 import unittest
 
-from utils.SeqReader import SeqReader
+from dsa_seq_utils.SeqReader import SeqReader
 
 
 class SeqReaderTest(unittest.TestCase):

@@ -3,12 +3,12 @@ from __future__ import division
 
 import sys
 
-from utils.SeqReader import SeqReader
-from utils.stats import calculate_mean
-from utils.stats import calculate_pop_sd
-from utils.utilities import get_flag
-from utils.utilities import help_desired
-from utils.utilities import log
+from dsa_seq_utils.SeqReader import SeqReader
+from dsa_seq_utils.stats import calculate_mean
+from dsa_seq_utils.stats import calculate_pop_sd
+from dsa_seq_utils.utilities import get_flag
+from dsa_seq_utils.utilities import help_desired
+from dsa_seq_utils.utilities import log
 
 usage = """
 Michael Alonge

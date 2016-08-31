@@ -30,9 +30,9 @@ python search_subseq.py [options] -f <sequence file> -s <length cutoff>
 """
 import sys
 
-from utils.SeqReader import SeqReader
-from utils.utilities import get_flag
-from utils.utilities import help_desired
+from dsa_seq_utils.SeqReader import SeqReader
+from dsa_seq_utils.utilities import get_flag
+from dsa_seq_utils.utilities import help_desired
 
 # Get command line args
 if help_desired(sys.argv):
