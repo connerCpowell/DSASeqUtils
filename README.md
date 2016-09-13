@@ -24,7 +24,7 @@ $cd DSASeqUtils
 $python setup.py install
 ```
 
-# Usage
+# Command Line Utilities Usage
 All command line utilities will show help message if run with no arguments, or if the -h flag is specified. 
 
 ## Genomic Gap Analysis
@@ -207,4 +207,20 @@ python search_subseq.py [options] -f <sequence file> -s <length cutoff>
     -h, --help   -------------- Display help message.
     -a           -------------- Input file is in fasta format.
     -q           -------------- Input file is in fastq format.
+```
+# API
+## Fasta Sequence Generator
+These sequences generators are light weight and designed for speed. Though they iterate through large files with speed, they are quite easy to break.
+
+There are two sequences generators, one for fasta and one for fastq format. Both of these are methods of the SeqReader class.
+```
+from dsa_seq_utils.SeqReader import SeqReader
+
+x = SeqReader('sequences.fasta')
+for header, sequence in x.parse_fasta():
+    # Do something with the header and sequence
+    
+y = SeqReader('sequences.fastq')
+for header, sequence, plus, qual in y.parse_fastq():
+    # Do something with header, sequence, plus, and qual
 ```
