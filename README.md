@@ -209,8 +209,8 @@ python search_subseq.py [options] -f <sequence file> -s <length cutoff>
     -q           -------------- Input file is in fastq format.
 ```
 # API
-## Fasta Sequence Generator
-These sequences generators are light weight and designed for speed. Though they iterate through large files with speed, they are quite easy to break.
+## Sequence Generators
+These sequence generators are light weight and designed for speed. Though they iterate through large files with speed, they are easy to break.
 
 There are two sequences generators, one for fasta and one for fastq format. Both of these are methods of the SeqReader class.
 ```
