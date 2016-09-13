@@ -85,3 +85,17 @@ class SeqReader:
                     yield read_list
                     read_list = []
                     index = 0
+
+    def get_seq(self, query_header):
+        """
+        Get one individual sequence from a multi fasta given
+        that sequences header.
+
+        :param query_header:
+        """
+        if not query_header.startswith('>'):
+            query_header = ''.join(['>', query_header])
+        for header, sequence in self.parse_fasta():
+            if header == query_header:
+                return header, sequence
+        return None

@@ -57,8 +57,8 @@ Output:
 
     import sys
 
+    from dsa_seq_utils.SeqReader import SeqReader
     from dsa_seq_utils.Sequence import KasparSequence
-    from get_fasta_sequence import get_seq
     from dsa_seq_utils.utilities import log
     from dsa_seq_utils.utilities import run
     from dsa_seq_utils.utilities import get_flag
@@ -102,7 +102,8 @@ Output:
 
     # Get scaffold with SNP.
     log('---- Getting SNP plus flanking region.')
-    header, sequence = get_seq(assembly, scaffold)
+    assembly_reader = SeqReader(assembly)
+    header, sequence = assembly_reader.get_seq(scaffold)
     if sequence is None:
         raise ValueError(
             'The header %s provided was not found in the reference genome file.' % scaffold

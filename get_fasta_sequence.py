@@ -1,21 +1,6 @@
 #!/usr/bin/env python
 from dsa_seq_utils.SeqReader import SeqReader
 
-
-def get_seq(file_name, query_header):
-        """
-        Get one individual sequence from a multi fasta given
-        that sequences header.
-
-        :param file_name:
-        :param query_header:
-        """
-        fasta_seqs = SeqReader(file_name)
-        for header, sequence in fasta_seqs.parse_fasta():
-            if header == query_header.rstrip():
-                return header, sequence
-        return None
-
 if __name__ == "__main__":
     usage = """
 Michael Alonge
@@ -46,8 +31,8 @@ python get_fasta_sequence.py [options] -f <fasta> -s <header>
 
     import sys
 
-    from utils.utilities import get_flag
-    from utils.utilities import help_desired
+    from dsa_seq_utils.utilities import get_flag
+    from dsa_seq_utils.utilities import help_desired
 
     # Parse the command line arguments.
     if help_desired(sys.argv):
@@ -62,7 +47,8 @@ python get_fasta_sequence.py [options] -f <fasta> -s <header>
     if not query_header.startswith('>'):
         query_header = ''.join(('>', query_header))
 
-    query = get_seq(fasta, query_header)
+    x = SeqReader(fasta)
+    query = x.get_seq(query_header)
     if query is not None:
         print query[0]
         print query[1]

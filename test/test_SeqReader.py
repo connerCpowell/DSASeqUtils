@@ -134,20 +134,17 @@ class SeqReaderTest(unittest.TestCase):
             self.assertEqual(plus, '+')
             self.assertEqual(qual, 'QQQQQQQQQQ')
 
-    """
-    # Should I add some features to catch this?
-    # Rigth now no errors are thrown
-    def test_incorrect_line_number_fastq(self):
-        x = SeqReader('bad_line_number.fastq')
-        for header, seq, plus, qual in x.parse_fastq():
-            print header
-
-    def test_parse_fastq_with_fasta(self):
+    def test_get_single_fasta_seq_with_caret(self):
         x = SeqReader('good_alt_line.fasta')
-        for read in x.parse_fastq():
-            print read
+        header, seq = x.get_seq('>test1')
+        self.assertEqual(header, '>test1')
+        self.assertEqual(seq, 'AAAAAAAAAA')
 
-    """
+    def test_get_single_fasta_seq_without_caret(self):
+        x = SeqReader('good_alt_line.fasta')
+        header, seq = x.get_seq('test1')
+        self.assertEqual(header, '>test1')
+        self.assertEqual(seq, 'AAAAAAAAAA')
 
 if __name__ == '__main__':
     unittest.main()
