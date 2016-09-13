@@ -134,13 +134,13 @@ class SeqReaderTest(unittest.TestCase):
             self.assertEqual(plus, '+')
             self.assertEqual(qual, 'QQQQQQQQQQ')
 
-    def test_get_single_fasta_seq_with_caret(self):
+    def test_get_single_fasta_seq_with_greater_than_sign(self):
         x = SeqReader('good_alt_line.fasta')
         header, seq = x.get_seq('>test1')
         self.assertEqual(header, '>test1')
         self.assertEqual(seq, 'AAAAAAAAAA')
 
-    def test_get_single_fasta_seq_without_caret(self):
+    def test_get_single_fasta_seq_without_greater_than_sign(self):
         x = SeqReader('good_alt_line.fasta')
         header, seq = x.get_seq('test1')
         self.assertEqual(header, '>test1')
