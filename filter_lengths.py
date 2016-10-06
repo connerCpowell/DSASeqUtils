@@ -45,13 +45,13 @@ input_file = get_flag(sys.argv, '-f', usage)
 # Get the cutoff length.
 lower_cutoff = get_flag(sys.argv, '-l', usage)
 try:
-    cutoff = int(lower_cutoff)
+    lower_cutoff = int(lower_cutoff)
 except ValueError():
     raise ValueError('Lower length cutoff must be an integer.')
 
 upper_cutoff = get_flag(sys.argv, '-u', usage)
 try:
-    cutoff = int(upper_cutoff)
+    upper_cutoff = int(upper_cutoff)
 except ValueError():
     raise ValueError('Upper length cutoff must be an integer.')
 
