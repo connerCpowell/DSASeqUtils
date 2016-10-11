@@ -48,3 +48,14 @@ def help_desired(args_list):
     ):
         return True
     return False
+
+
+def kmerize(seq, k):
+    """
+
+    :param seq:
+    :param k:
+    :return:
+    """
+    for i in range(len(seq) - k +1):
+        yield seq[i:i+k]
