@@ -57,3 +57,30 @@ def kmerize(seq, k):
     """
     for i in range(len(seq) - k +1):
         yield seq[i:i+k]
+
+
+def find_coverage_cutoff(read_lengths, genome_size, desired_coverage):
+    """
+    Given a desired coverage and a list of read lengths, return
+    the read length at which all reads greater than that value collectively
+    reach the desired coverage.
+
+    :param read_lengths:
+    :param genome_size:
+    :param desired_coverage:
+    """
+    sorted_read_lengths = sorted(read_lengths, reverse=True)
+    total = 0
+
+    for read_length in sorted_read_lengths:
+        total += read_length
+
+        # Check if the desired coverage has been reached yet
+        if total/genome_size >= desired_coverage:
+            return read_length - 1
+
+    # If the desired coverage is never reached, let the user know.
+    error = """
+    The entire dataset does not reach the desired coverage. The coverage
+               of the dataset is %f""" % (total/genome_size)
+    raise RuntimeError(error)
