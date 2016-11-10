@@ -112,11 +112,12 @@ Output:
     # Check that reference base is consistent.
     if sequence[snp_coord-1] != snp[0]:
         raise ValueError(
-            'Reference base %s did not equal input base %s.' % (sequence[snp_coord-1], snp[0])
+            'Reference base %s did not match input base %s.' % (sequence[snp_coord-1], snp[0])
         )
 
     # Get SNP region within scaffold.
     region = sequence[snp_coord - flank - 1:snp_coord + flank]
+    ref_region = KasparSequence(region)
     alt_region = KasparSequence(region)
     SNP_region = KasparSequence(region)
     this_SNP = '[' + snp[0] + '/' + snp[1] + ']'
@@ -126,8 +127,25 @@ Output:
         log('---- Masking SNP region.')
         for line in open(masking_file):
             bed = line.split('\t')
-            alt_region.replace_coordinates('n', int(bed[1]) - 1, int(bed[2]) - 1)
-            SNP_region.replace_coordinates('n', int(bed[1]) - 1, int(bed[2]) - 1)
+
+            # Check that bed header matches header of this region.
+            if bed[0] != scaffold[1:]:
+                raise ValueError('The masking file header %s does not match the SNP region header %s' % (bed[0], scaffold[1:]))
+
+            # Translate the bed regions to refer to our new kaspar region
+            start_mask = int(bed[1]) - snp_coord + flank + 1
+            end_mask = int(bed[2]) - snp_coord + flank + 1
+
+            # Check that these updated masking regions fall within the kaspar region range.
+            if start_mask not in range(len(ref_region.sequence)) or end_mask not in range(len(ref_region.sequence)):
+                mask_message = """
+                Masking file represents regions beyond specified kaspar region. Masking region is %r - %r, while
+                the kaspar region only has length %r""" % (start_mask, end_mask, len(ref_region.sequence))
+                raise ValueError(mask_message)
+
+            ref_region.replace_coordinates('n', start_mask, end_mask)
+            alt_region.replace_coordinates('n', start_mask, end_mask)
+            SNP_region.replace_coordinates('n', start_mask, end_mask)
         alt_region.replace_coordinates(snp[1], flank, flank+1)
         SNP_region.replace_coordinates(this_SNP, flank, flank+1)
     else:
@@ -147,7 +165,7 @@ Output:
             str(flank+1) +
             '\n'
         )
-        outfile1.write(sequence)
+        outfile1.write(ref_region.sequence)
 
     with open(project + '.ALT.fasta', 'w') as outfile2:
         outfile2.write(
