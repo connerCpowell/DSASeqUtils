@@ -69,6 +69,54 @@ class SeqReader:
                     sequence += ''.join(line.rstrip().split())
         yield header, sequence
 
+    def parse_multihead_fasta(self):
+        """
+        Generator yielding header and sequence, for each sequence
+        in the fasta file sent to the class. This variation of the
+        parse_fasta generator is specially capable of handling sequences
+        which might have multiple header lines per sequence. For example:
+
+        >line 1
+        >another header
+        ATGC
+        >line 2
+        >another header
+        ATGC
+
+        I decided not to adjust the original generator to accomdodate this, because then
+        it would not be able to handle fasta files where a header is present but no sequence.
+        """
+        with open(self.in_file) as fasta_file:
+            sequence = ''
+            # Find first header.
+            line = fasta_file.readline()
+            while not line.startswith('>'):
+                line = fasta_file.readline()
+                if not line:
+                    error = """ This file provided is not in proper fasta format.
+                    In addition to the usual fasta conventions, be sure that there are
+                    no blank lines in the file.
+                    """
+                    raise RuntimeError(error)
+            header = line.rstrip()
+
+            # Get sequence associated with that header.
+            for line in fasta_file:
+                if line.startswith('>'):
+                    # Here is the change. Check if this header is immediately following
+                    # the previous header. If so, treat it as an extension of the previous header.
+                    if not sequence:
+                        header += line.rstrip()
+                    else:
+                        # Once the sequence is over, (next header begins),
+                        # yield initial header and sequence.
+                        yield header, sequence
+                        header = line.rstrip()
+                        sequence = ''
+                else:
+                    sequence += ''.join(line.rstrip().split())
+        yield header, sequence
+
     def parse_fastq(self):
         """
         Fastq generator, yielding a list of 4 lines at a time.
