@@ -142,6 +142,30 @@ class SeqReaderTest(unittest.TestCase):
         self.assertEqual(header, '>test2>test2_again')
         self.assertEqual(sequence, 'GGGGGGGGGG')
 
+    def test_good_alt_lines_fasta_multihead(self):
+        x = SeqReader('good_alt_line.fasta')
+        fasta_iter = x.parse_multihead_fasta()
+
+        header, sequence = fasta_iter.next()
+        self.assertEqual(header, '>test1')
+        self.assertEqual(sequence, 'AAAAAAAAAA')
+
+        header, sequence = fasta_iter.next()
+        self.assertEqual(header, '>test2')
+        self.assertEqual(sequence, 'GGGGGGGGGG')
+
+    def test_good_non_alt_lines_fasta_multihead(self):
+        x = SeqReader('good_non_alt_line.fasta')
+        fasta_iter = x.parse_multihead_fasta()
+
+        header, sequence = fasta_iter.next()
+        self.assertEqual(header, '>test1')
+        self.assertEqual(sequence, 'AAAAAAAAAA')
+
+        header, sequence = fasta_iter.next()
+        self.assertEqual(header, '>test2')
+        self.assertEqual(sequence, 'GGGGGGGGGG')
+
     def test_parse_fasta_with_fastq(self):
         with self.assertRaises(RuntimeError):
             x = SeqReader('good.fastq')
