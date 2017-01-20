@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from dsa_seq_utils.SeqReader import SeqReader
+
 
 if __name__ == "__main__":
     usage = """
@@ -26,11 +26,15 @@ python get_fasta_sequence.py [options] -f <fasta> -s <header>
 
     OPTIONS:
 
-    -h, --help   -------------- Display help message.
+    -h, --help   -------------- Display the help message.
+    -r           -------------- Specify a range for a subset nucleotides to return from the given sequence.
+                                e.g. -r 100:25843 returns the subset of nucleotides specified in between these
+                                genomic coordinates (0-based).
 """
 
     import sys
 
+    from dsa_seq_utils.SeqReader import SeqReader
     from dsa_seq_utils.utilities import get_flag
     from dsa_seq_utils.utilities import help_desired
 
@@ -47,10 +51,33 @@ python get_fasta_sequence.py [options] -f <fasta> -s <header>
     if not query_header.startswith('>'):
         query_header = ''.join(('>', query_header))
 
+    # If a range has been specified, retrieve it.
+    subseq = False
+    if '-r' in sys.argv:
+        coordinates = get_flag(sys.argv, '-r', usage)
+
+        try:
+            coords = [int(i) for i in coordinates.split(":")]
+        except:
+            error = """
+            The subsequence coordinates has not been properly specified. Specify coordinates using a colon.
+            e.g. -r start:end, where start and end are integers. """
+            raise ValueError(error)
+
+        subseq = True
+
+
     x = SeqReader(fasta)
     query = x.get_seq(query_header)
     if query is not None:
-        print query[0]
-        print query[1]
+        if not subseq:
+            print query[0]
+            print query[1]
+        else:
+            # This check is more for header output, as this will not affect string slicing.
+            if coords[1] > len(query[1]):
+                coords[1] = len(query[1])
+            print query[0] + " - " + str(coords[0]) + ":" + str(coords[1])
+            print query[1][coords[0]:coords[1]]
     else:
         print 'A sequence for header %s was not found' % query_header
