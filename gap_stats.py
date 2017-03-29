@@ -8,8 +8,7 @@ import collections
 
 from dsa_seq_utils.Sequence import GapSequence
 from dsa_seq_utils.SeqReader import SeqReader
-from dsa_seq_utils.stats import calculate_mean
-from dsa_seq_utils.stats import calculate_pop_sd
+from dsa_seq_utils.stats import calculate_median
 from dsa_seq_utils.utilities import log
 from dsa_seq_utils.utilities import help_desired
 
@@ -86,26 +85,22 @@ python gap_stats.py [options] <sequence1.fasta> <sequence2.fasta> <sequence3.fas
                        key = fasta file
                        value = ordered dictionary containing all gap info from get_gap_info
         """
-        with open('gap_stats.csv', 'w') as out_file:
+        with open('gap_stats.txt', 'w') as out_file:
             # Get each category from each fasta file. One row for each.
             all_percent_N = [str(100*(info[i]['total_N']/info[i]['total_nucleotides'])) for i in info.keys()]
             all_total_gaps = [str(info[i]['total_gaps']) for i in info.keys()]
             all_total_gaps_over_100 = [str(info[i]['total_gaps_over_100']) for i in info.keys()]
             all_longest_gap = [str(max(info[i]['all_gap_lengths'])) for i in info.keys()]
-            all_means = [str(calculate_mean(info[i]['all_gap_lengths'])) for i in info.keys()]
-            all_standard_deviations = [str(calculate_pop_sd(info[i]['all_gap_lengths'])) for i in info.keys()]
+            all_medians = [str(calculate_median(info[i]['all_gap_lengths'])) for i in info.keys()]
+            files = [ntpath.basename(f) for f in info.keys()]
 
             # Write rows out to csv file.
-            # First, write out the header (file names).
-            out_file.write(',' + ','.join(ntpath.basename(f) for f in info.keys()) + '\n')
+            # First, write out the header (gap metrics).
+            out_file.write('%s\t%s\t%s\t%s\t%s\t%s\n' % ('file_name', '%N', 'Total Gaps', 'Total Gaps Longer Than 100bp', 'Longest Gap', 'Median Gap Length'))
 
-            # Next, write out the stats.
-            out_file.write('% N,' + ','.join(all_percent_N) + '\n')
-            out_file.write('Total Gaps,' + ','.join(all_total_gaps) + '\n')
-            out_file.write('Total Gaps Longer Than 100bp,' + ','.join(all_total_gaps_over_100) + '\n')
-            out_file.write('Longest Gap,' + ','.join(all_longest_gap) + '\n')
-            out_file.write('Mean Gap Length,' + ','.join(all_means) + '\n')
-            out_file.write('Gap Length Standard Deviation,' + ','.join(all_standard_deviations))
+            # Write results for each file.
+            for i in range(len(files)):
+                out_file.write('%s\t%s\t%s\t%s\t%s\t%s\n' % (files[i], all_percent_N[i], all_total_gaps[i], all_total_gaps_over_100[i], all_longest_gap[i], all_medians[i]))
 
     def write_bed_file(bed_dict, out_file_name):
         """

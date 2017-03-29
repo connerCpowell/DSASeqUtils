@@ -30,3 +30,22 @@ def calculate_pop_sd(data_list):
     # Calculate the variance.
     variance = sum(math.pow(j - mean, 2) for j in data_list)/sample_number
     return math.sqrt(variance)
+
+
+def calculate_median(data_list):
+    """
+    Calculate the median of a list of numbers.
+    :param data_list: List of numbers
+    :return: Median of those numbers.
+    """
+    if not data_list or len(data_list) == 1:
+        raise ValueError('At least 2 values are needed to calculate the median.')
+
+    dist_length = len(data_list)
+    sorted_data = sorted(data_list)
+    if dist_length % 2 == 0:
+        x = sorted_data[dist_length//2]
+        y = sorted_data[(dist_length//2)-1]
+        return (x+y)/2
+    else:
+        return sorted_data[dist_length//2]
