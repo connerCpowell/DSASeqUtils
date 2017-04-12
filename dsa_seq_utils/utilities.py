@@ -2,6 +2,25 @@
 import time
 import subprocess
 
+complements = {
+    'A': 'T',
+    'T': 'A',
+    'C': 'G',
+    'G': 'C',
+    'N': 'N',
+    'U': 'A',
+    'R': 'Y',
+    'Y': 'R',
+    'S': 'S',
+    'W': 'W',
+    'K': 'M',
+    'M': 'K',
+    'B': 'V',
+    'V': 'B',
+    'D': 'H',
+    'H': 'D'
+}
+
 
 def run(cmnd):
     """ Run command and report status. """
@@ -88,3 +107,15 @@ def find_coverage_cutoff(read_lengths, genome_size, desired_coverage):
     The entire dataset does not reach the desired coverage. The coverage
                of the dataset is %f""" % (total/genome_size)
     raise RuntimeError(error)
+
+
+def reverse_complement(seq):
+    """
+    Reverse complement a nucleotide sequence.
+    :param seq: Sequence to be reverse complemented
+    :return: A reverse complemented sequence
+    """
+    rc_seq = ''
+    for nuc in seq[::-1]:
+        rc_seq += complements[nuc]
+    return rc_seq
