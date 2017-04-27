@@ -12,11 +12,12 @@ Description:
 
 This command line utility selects one fasta sequence from a multi fasta file
 given a sequence header. The sequence from the desired header is
-written to standard output in fasta format.
+written to standard output in fasta format. A file of many headers can be used to select many
+sequences.
 _____
 Usage:
 
-python get_fasta_sequence.py [options] -f <fasta> -s <header>
+python get_fasta_sequence.py [options] -f <fasta> -s <header> -l <headers.txt>
 
     flags:
 
