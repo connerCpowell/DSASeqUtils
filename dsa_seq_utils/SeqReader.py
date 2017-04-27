@@ -147,3 +147,21 @@ class SeqReader:
             if header == query_header:
                 return header, sequence
         return None
+
+    def get_multiple_seqs(self, query_headers):
+        """
+        Get multiple sequences from a multi fasta given
+        sequence headers.
+        :return:
+        """
+        all_seqs = dict()
+        for i in query_headers:
+            if not i.startswith('>'):
+                i = ''.join(['>', query_headers])
+        for header, sequence in self.parse_fasta():
+            all_seqs[header] = sequence
+
+        try:
+            return query_headers, all_seqs[query_headers]
+        except KeyError:
+            return None
