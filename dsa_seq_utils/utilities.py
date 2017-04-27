@@ -44,13 +44,9 @@ def get_flag(args_list, flag, usage=''):
     try:
         arg = args_list[args_list.index(flag) + 1]
     except ValueError:
-        if usage:
-            print usage
-        raise ValueError("No '%s' flag specified." % flag)
+        raise ValueError(usage + "\n\n" + "No '%s' flag specified." % flag)
     except IndexError:
-        if usage:
-            print usage
-        raise ValueError("The %s flag was specified, but was not followed by an argument." % flag)
+        raise ValueError(usage + "\n\n" + "The %s flag was specified, but was not followed by an argument." % flag)
     return arg
 
 

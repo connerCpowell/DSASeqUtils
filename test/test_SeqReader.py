@@ -212,6 +212,15 @@ class SeqReaderTest(unittest.TestCase):
         self.assertEqual(header, '>test2')
         self.assertEqual(seq, 'GGGGGGGGGG')
 
+    def test_get_multiple_fasta_seq_wrong_header(self):
+        x = SeqReader('good_alt_line.fasta')
+        gen = x.get_multiple_seqs(['test1', 'test_wrong_header'])
+        header, seq = gen.next()
+        self.assertEqual(header, '>test1')
+        self.assertEqual(seq, 'AAAAAAAAAA')
+        with self.assertRaises(ValueError):
+            gen.next()
+
 
 
 if __name__ == '__main__':

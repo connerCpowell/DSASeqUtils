@@ -169,4 +169,4 @@ class SeqReader:
             try:
                 yield head, all_seqs[head]
             except KeyError:
-                raise ValueError('A sequence with the head %s was not found' % head)
+                raise ValueError('A sequence with the header %s was not found' % head)

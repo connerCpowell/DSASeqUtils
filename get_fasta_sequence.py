@@ -22,6 +22,8 @@ python get_fasta_sequence.py [options] -f <fasta> -s <header>
 
     -f      ------------------- Fasta file from which a sequence is desired.
     -s      ------------------- The header of the sequence desired.
+    -l           -------------- A file of header names. One column with each row as a header name. This will
+                                override -s.
 
 
     OPTIONS:
@@ -29,7 +31,8 @@ python get_fasta_sequence.py [options] -f <fasta> -s <header>
     -h, --help   -------------- Display the help message.
     -r           -------------- Specify a range for a subset nucleotides to return from the given sequence.
                                 e.g. -r 100:25843 returns the subset of nucleotides specified in between these
-                                genomic coordinates (0-based).
+                                genomic coordinates (0-based). If multiple headers are specified with -l, this
+                                range will apply to all sequences.
 """
 
     import sys
@@ -46,10 +49,15 @@ python get_fasta_sequence.py [options] -f <fasta> -s <header>
     fasta = get_flag(sys.argv, '-f', usage)
 
     # Get the fasta header for contig/scaffold of interest.
-    query_header = get_flag(sys.argv, '-s', usage)
-    # Add a '>' character if not already there.
-    if not query_header.startswith('>'):
-        query_header = ''.join(('>', query_header))
+    one_header = False
+    try:
+        query_header = get_flag(sys.argv, '-s', usage)
+        one_header = True
+        # Add a '>' character if not already there.
+        if not query_header.startswith('>'):
+            query_header = ''.join(('>', query_header))
+    except ValueError:
+        pass
 
     # If a range has been specified, retrieve it.
     subseq = False
@@ -66,18 +74,43 @@ python get_fasta_sequence.py [options] -f <fasta> -s <header>
 
         subseq = True
 
+    # Check if a list of headers has been passed.
+    multi_headers = False
+    try:
+        header_list = get_flag(sys.argv, '-l', usage)
+        multi_headers = True
+    except ValueError:
+        if not one_header:
+            print usage
+            raise ValueError('Either -s or -l flags must be specified.')
+
 
     x = SeqReader(fasta)
-    query = x.get_seq(query_header)
-    if query is not None:
-        if not subseq:
-            print query[0]
-            print query[1]
+    if not multi_headers:
+        query = x.get_seq(query_header)
+        if query is not None:
+            if not subseq:
+                print query[0]
+                print query[1]
+            else:
+                # This check is more for header output, as this will not affect string slicing.
+                if coords[1] > len(query[1]):
+                    coords[1] = len(query[1])
+                print query[0] + " - " + str(coords[0]) + ":" + str(coords[1])
+                print query[1][coords[0]:coords[1]]
         else:
-            # This check is more for header output, as this will not affect string slicing.
-            if coords[1] > len(query[1]):
-                coords[1] = len(query[1])
-            print query[0] + " - " + str(coords[0]) + ":" + str(coords[1])
-            print query[1][coords[0]:coords[1]]
+            print 'A sequence for header %s was not found' % query_header
+
     else:
-        print 'A sequence for header %s was not found' % query_header
+        with open(header_list, 'r') as in_file:
+            all_headers = in_file.read().split()
+        for query in x.get_multiple_seqs(all_headers):
+            if not subseq:
+                print query[0]
+                print query[1]
+            else:
+                # This check is more for header output, as this will not affect string slicing.
+                if coords[1] > len(query[1]):
+                    coords[1] = len(query[1])
+                print query[0] + " - " + str(coords[0]) + ":" + str(coords[1])
+                print query[1][coords[0]:coords[1]]
