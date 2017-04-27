@@ -192,5 +192,27 @@ class SeqReaderTest(unittest.TestCase):
         self.assertEqual(header, '>test1')
         self.assertEqual(seq, 'AAAAAAAAAA')
 
+    def test_get_multiple_fasta_seq_with_greater_than_sign(self):
+        x = SeqReader('good_alt_line.fasta')
+        gen = x.get_multiple_seqs(['>test1', '>test2'])
+        header, seq = gen.next()
+        self.assertEqual(header, '>test1')
+        self.assertEqual(seq, 'AAAAAAAAAA')
+        header, seq = gen.next()
+        self.assertEqual(header, '>test2')
+        self.assertEqual(seq, 'GGGGGGGGGG')
+
+    def test_get_multiple_fasta_seq_without_greater_than_sign(self):
+        x = SeqReader('good_alt_line.fasta')
+        gen = x.get_multiple_seqs(['test1', 'test2'])
+        header, seq = gen.next()
+        self.assertEqual(header, '>test1')
+        self.assertEqual(seq, 'AAAAAAAAAA')
+        header, seq = gen.next()
+        self.assertEqual(header, '>test2')
+        self.assertEqual(seq, 'GGGGGGGGGG')
+
+
+
 if __name__ == '__main__':
     unittest.main()

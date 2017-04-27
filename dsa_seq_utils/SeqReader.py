@@ -155,13 +155,18 @@ class SeqReader:
         :return:
         """
         all_seqs = dict()
+        q_heads = []
         for i in query_headers:
             if not i.startswith('>'):
-                i = ''.join(['>', query_headers])
+                q_heads.append(''.join(['>', i]))
+            else:
+                q_heads.append(i)
+
         for header, sequence in self.parse_fasta():
             all_seqs[header] = sequence
 
-        try:
-            return query_headers, all_seqs[query_headers]
-        except KeyError:
-            return None
+        for head in q_heads:
+            try:
+                yield head, all_seqs[head]
+            except KeyError:
+                raise ValueError('A sequence with the head %s was not found' % head)
