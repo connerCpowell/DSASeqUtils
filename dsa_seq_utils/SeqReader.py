@@ -157,6 +157,8 @@ class SeqReader:
         all_seqs = dict()
         q_heads = []
         for i in query_headers:
+            if not i:
+                continue
             if not i.startswith('>'):
                 q_heads.append(''.join(['>', i]))
             else:

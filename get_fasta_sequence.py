@@ -105,6 +105,7 @@ python get_fasta_sequence.py [options] -f <fasta> -s <header> -l <headers.txt>
     else:
         with open(header_list, 'r') as in_file:
             all_headers = in_file.read().split('\n')
+            print all_headers
         for query in x.get_multiple_seqs(all_headers):
             if not subseq:
                 print query[0]
