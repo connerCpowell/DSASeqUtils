@@ -18,11 +18,11 @@ gap_stats.py has an optional flag that requires matplotlib.
 **** Installing From Source
 Currently, the only way to install DSASeqUtils is from source. To install, execute the following commands:
 
-```
-$git clone https://github.com/malonge/DSASeqUtils
-$cd DSASeqUtils
-$python setup.py install
-```
+
+    $git clone https://github.com/malonge/DSASeqUtils
+    $cd DSASeqUtils
+    $python setup.py install
+
 
 ** Usage
 All command line utilities will show help message if run with no arguments, or if the -h flag is specified. 
@@ -222,3 +222,67 @@ There are two sequences generators, one for fasta and one for fastq format. Both
     y = SeqReader('sequences.fastq')
     for header, sequence, plus, qual in y.parse_fastq():
         # Do something with header, sequence, plus, and qual
+
+
+Instead of iterating through every sequence in a fasta file, one can get just one sequence, or a list of sequences.
+
+    from dsa_seq_utils.SeqReader import SeqReader
+
+    x = SeqReader('sequences.fasta')
+
+    # Get just one sequence given its header
+    header, seq = x.get_fasta('sequence_header')
+
+    # Get multiple sequences given a list of headers
+    for header, seq in x.get_multiple_seqs(['sequence_header_1', 'sequence_header_2', 'sequence_header_3'])
+        # Do something with the headers and sequences
+        # for these 3 sequences.
+
+
+**** Utilities
+****** kmerizer
+Given a string of nucleotides and a value for k, this generator will yield, in order, every kmer.
+
+    from dsa_seq_utils.utilities import kmerize
+    for kmer in kmerize('ATCGATCG', 4):
+        print kmer
+
+    # This will print the following
+    # ATCG
+    # TCGA
+    # CGAT
+    # GATC
+    # ATCG
+
+****** Coverage Cutoff
+Given a desired coverage and a list of read lengths, return the read length at which all reads
+greater than that value collectively reach the desired coverage. This is helpful when one is working with
+long read data of heterogeneous lengths, and one wants to retain a set of the longest possible reads which
+will satisfy a certain global genomic coverage.
+
+    from dsa_seq_utils.utilities import find_coverage_cutoff
+
+    read_lengths = [
+        213430,
+        100074,
+        129831,
+        234113,
+        324231,
+        903121
+    ]
+
+    find_coverage_cutoff(read_lengths, 30000, 50)
+
+    # returns 213429
+    # If one includes all reads of length 213429 or greater, one will have the set of longest possible reads
+    # that covers a genome size of 30kb with roughly 50X coverage.
+
+
+****** Reverse Complement
+Reverse compliment a string of nucleotides. IUPAC Ambiguity codes are allowed.
+
+    from dsa_seq_utils.utilities import reverse_complement
+
+    reverse_complement('ATCGNWSV')
+
+    # returns 'BSWNCGAT'
