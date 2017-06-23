@@ -8,7 +8,9 @@
   <li>Linux</li>
   <li>Mac OSX</li>
 </ul>
+
 ## Dependencies
+
 All utilities require python2.7.
 
 design_kaspar.py requires blastn. Please ensure blastn is in your path before executing design_kaspar.py 
