@@ -232,7 +232,7 @@ from dsa_seq_utils.SeqReader import SeqReader
 x = SeqReader('sequences.fasta')
 
 # Get just one sequence given its header
-header, seq = x.get_fasta('sequence_header')
+header, seq = x.get_seq('sequence_header')
 
 # Get multiple sequences given a list of headers
 for header, seq in x.get_multiple_seqs(['sequence_header_1', 'sequence_header_2', 'sequence_header_3'])
